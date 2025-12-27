@@ -8,13 +8,13 @@ Ce projet est une application web complète de gestion de tâches (Todo List) d�
 
 ## 🎯 Objectifs Pédagogiques
 
-- ✅ Maîtriser **Java 17** et **Spring Boot 3.2.x**
-- ✅ Apprendre **Angular 19** avec **TypeScript**
+- ✅ Maîtriser **Java 11** et **Spring Boot 2.7.x**
+- ✅ Apprendre **Angular 20** avec **TypeScript**
 - ✅ Appliquer les principes **SOLID** (voir [docs/SOLID.md](docs/SOLID.md))
 - ✅ Implémenter une **Clean Architecture**
 - ✅ Développer des API RESTful
 - ✅ Gérer la persistance avec **JPA/Hibernate**
-- ✅ Créer des composants Angular réactifs
+- ✅ Créer des composants Angular réactifs avec **Angular Material**
 - ✅ Mettre en place des tests unitaires et d'intégration
 
 ## 📁 Structure du Monorepo
@@ -52,7 +52,7 @@ todo-app-java-angular/
 
 ### Prérequis
 
-- **Java 17** ou supérieur
+- **Java 11** ou supérieur
 - **Maven 3.8+**
 - **Node.js 18+** et **npm 9+**
 - **Git**
@@ -87,23 +87,35 @@ npm start
 
 L'application sera accessible sur **http://localhost:4200**
 
+### Console H2 (Base de données)
+
+Pour accéder à la console H2 et visualiser les données:
+
+1. Ouvrir **http://localhost:8080/h2-console**
+2. Utiliser les paramètres suivants:
+   - **JDBC URL**: `jdbc:h2:mem:tododb`
+   - **User Name**: `sa`
+   - **Password**: (laisser vide)
+3. Cliquer sur "Connect"
+
+**Note**: La base de données H2 fonctionne en mémoire, les données sont perdues au redémarrage du backend.
+
 ## 🛠️ Stack Technique
 
 ### Backend
-- **Java 17**
-- **Spring Boot 3.2.x**
+- **Java 11**
+- **Spring Boot 2.7.18**
 - **Spring Data JPA**
-- **H2 Database** (développement)
-- **PostgreSQL** (production)
+- **H2 Database** (en mémoire)
 - **Maven**
 - **Lombok**
 - **JUnit 5** & **Mockito**
 
 ### Frontend
-- **Angular 19**
+- **Angular 20**
 - **TypeScript 5.x**
 - **RxJS**
-- **Angular Material** (UI)
+- **Angular Material** (UI avec thème Material Design)
 - **Jasmine** & **Karma** (tests)
 
 ## 🧪 Tests
@@ -142,8 +154,8 @@ npm run test:coverage
 Le projet suit un plan de développement progressif en 10 phases. Consultez [docs/ROADMAP.md](docs/ROADMAP.md) pour le détail complet.
 
 1. ✅ **Phase 1** - Configuration initiale
-2. ⏳ **Phase 2** - Backend CRUD basique
-3. ⏳ **Phase 3** - Frontend basique
+2. ✅ **Phase 2** - Backend CRUD basique (API REST complète)
+3. ✅ **Phase 3** - Frontend basique (Angular Material Design)
 4. ⏳ **Phase 4** - Validation et gestion d'erreurs
 5. ⏳ **Phase 5** - Filtres et recherche
 6. ⏳ **Phase 6** - Authentification JWT

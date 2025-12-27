@@ -9,8 +9,8 @@
 | Phase | Nom | Durée | Statut |
 |-------|-----|-------|--------|
 | 1 | Configuration initiale | 2-3h | ✅ Complété |
-| 2 | Backend CRUD basique | 4-6h | ⏳ À faire |
-| 3 | Frontend basique | 4-6h | ⏳ À faire |
+| 2 | Backend CRUD basique | 4-6h | ✅ Complété |
+| 3 | Frontend basique | 4-6h | ✅ Complété |
 | 4 | Validation et gestion d'erreurs | 3-4h | ⏳ À faire |
 | 5 | Filtres et recherche | 3-4h | ⏳ À faire |
 | 6 | Authentification JWT | 5-7h | ⏳ À faire |
@@ -71,7 +71,7 @@ frontend/
 
 ---
 
-## Phase 2️⃣ : Backend CRUD Basique
+## Phase 2️⃣ : Backend CRUD Basique ✅
 
 ### 🎯 Objectifs
 - Créer le modèle de données Todo
@@ -145,23 +145,24 @@ public class Todo {
 | DELETE | `/api/todos/{id}` | Supprimer une tâche |
 
 ### ✅ Checklist de Validation
-- [ ] Entité Todo créée avec annotations JPA
-- [ ] TodoRepository implémenté (extends JpaRepository)
-- [ ] TodoService et TodoServiceImpl créés
-- [ ] TodoController avec les 5 endpoints REST
-- [ ] Base de données H2 configurée dans application.properties
-- [ ] Tests avec Postman ou curl réussis pour tous les endpoints
-- [ ] Console H2 accessible (http://localhost:8080/h2-console)
+- [x] Entité Todo créée avec annotations JPA
+- [x] TodoRepository implémenté (extends JpaRepository)
+- [x] TodoService et TodoServiceImpl créés
+- [x] TodoController avec les 5 endpoints REST
+- [x] Base de données H2 configurée dans application.yaml
+- [x] Tests avec l'interface Angular réussis pour tous les endpoints
+- [x] Console H2 accessible (http://localhost:8080/h2-console)
 
 ---
 
-## Phase 3️⃣ : Frontend Basique
+## Phase 3️⃣ : Frontend Basique ✅
 
 ### 🎯 Objectifs
 - Créer l'interface utilisateur pour afficher les todos
 - Implémenter les formulaires d'ajout et modification
 - Connecter le frontend au backend via HTTP
 - Gérer l'état de l'application
+- Implémenter Angular Material Design
 
 ### 📚 Concepts à Apprendre
 **Angular**:
@@ -239,15 +240,18 @@ export class TodoService {
 - Filtres: Toutes, Actives, Complétées
 
 ### ✅ Checklist de Validation
-- [ ] TodoService créé avec toutes les méthodes HTTP
-- [ ] Modèle Todo (interface TypeScript) défini
-- [ ] Composant TodoList affiche la liste des tâches
-- [ ] Composant TodoForm permet de créer/éditer
-- [ ] Composant TodoItem affiche une tâche individuelle
-- [ ] Boutons de suppression et modification fonctionnels
-- [ ] Checkbox pour marquer comme complété fonctionne
-- [ ] Gestion des erreurs HTTP basique
-- [ ] Angular Material installé et configuré
+- [x] TodoService créé avec toutes les méthodes HTTP
+- [x] Modèle Todo (interface TypeScript) défini
+- [x] Composant TodoList affiche la liste des tâches avec Material Cards
+- [x] Composant TodoForm permet de créer des todos avec Material Form Fields
+- [x] Composant TodoList affiche les tâches avec checkboxes Material
+- [x] Boutons de suppression fonctionnels avec Material Buttons
+- [x] Checkbox pour marquer comme complété fonctionne (Material Checkbox)
+- [x] Gestion des erreurs avec Material Snackbar
+- [x] Angular Material installé et configuré (thème indigo/pink)
+- [x] Material Icons intégrés
+- [x] Filtres (Toutes/Actives/Complétées) avec Material Chips
+- [x] Design responsive avec breakpoints mobile
 
 ---
 
