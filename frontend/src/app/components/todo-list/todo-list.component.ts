@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../models/todo.model';
 
@@ -10,7 +17,16 @@ import { Todo } from '../../models/todo.model';
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule
+  ],
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
@@ -21,7 +37,10 @@ export class TodoListComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
-  constructor(private todoService: TodoService) { }
+  constructor(
+    private todoService: TodoService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.loadTodos();
@@ -43,6 +62,7 @@ export class TodoListComponent implements OnInit {
       error: (err) => {
         this.error = 'Failed to load todos. Please try again.';
         this.loading = false;
+        this.showSnackBar('Failed to load todos', 'error');
         console.error('Error loading todos:', err);
       }
     });
@@ -59,9 +79,10 @@ export class TodoListComponent implements OnInit {
       next: () => {
         todo.completed = !todo.completed;
         this.applyFilter();
+        this.showSnackBar(todo.completed ? 'Todo completed!' : 'Todo marked as active', 'success');
       },
       error: (err) => {
-        this.error = 'Failed to update todo.';
+        this.showSnackBar('Failed to update todo', 'error');
         console.error('Error updating todo:', err);
       }
     });
@@ -73,18 +94,17 @@ export class TodoListComponent implements OnInit {
   deleteTodo(id: number | undefined): void {
     if (!id) return;
 
-    if (confirm('Are you sure you want to delete this todo?')) {
-      this.todoService.deleteTodo(id).subscribe({
-        next: () => {
-          this.todos = this.todos.filter(t => t.id !== id);
-          this.applyFilter();
-        },
-        error: (err) => {
-          this.error = 'Failed to delete todo.';
-          console.error('Error deleting todo:', err);
-        }
-      });
-    }
+    this.todoService.deleteTodo(id).subscribe({
+      next: () => {
+        this.todos = this.todos.filter(t => t.id !== id);
+        this.applyFilter();
+        this.showSnackBar('Todo deleted successfully', 'success');
+      },
+      error: (err) => {
+        this.showSnackBar('Failed to delete todo', 'error');
+        console.error('Error deleting todo:', err);
+      }
+    });
   }
 
   /**
@@ -130,5 +150,17 @@ export class TodoListComponent implements OnInit {
    */
   trackByTodoId(index: number, todo: Todo): number | undefined {
     return todo.id;
+  }
+
+  /**
+   * Show a snackbar message.
+   */
+  private showSnackBar(message: string, type: 'success' | 'error'): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: type === 'success' ? ['success-snackbar'] : ['error-snackbar']
+    });
   }
 }

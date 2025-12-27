@@ -1,23 +1,58 @@
 .app-container {
   min-height: 100vh;
-  background-color: #f5f7fa;
+  display: flex;
+  flex-direction: column;
 }
 
-.app-header {
-  background-color: #fff;
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem 2rem;
-  text-align: center;
 
-  h1 {
-    margin: 0;
-    color: #333;
-    font-size: 2rem;
+  .app-icon {
+    margin-right: 1rem;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .app-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .app-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.9;
   }
 }
 
 .app-main {
-  max-width: 1200px;
-  margin: 0 auto;
+  flex: 1;
   padding: 2rem 1rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .app-toolbar {
+    .app-title {
+      font-size: 1.2rem;
+    }
+
+    .app-subtitle {
+      display: none;
+    }
+  }
+
+  .app-main {
+    padding: 1rem 0.5rem;
+  }
 }

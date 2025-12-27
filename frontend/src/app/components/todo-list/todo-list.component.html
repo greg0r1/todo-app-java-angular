@@ -1,83 +1,94 @@
 <div class="todo-list-container">
-  <header class="header">
-    <h1>Todo List</h1>
-    <button class="btn-add" (click)="loadTodos()">Refresh</button>
-  </header>
+  <!-- Header avec filtres -->
+  <mat-card class="filter-card">
+    <mat-card-content>
+      <div class="filter-header">
+        <h2>My Tasks</h2>
+        <button mat-raised-button color="primary" (click)="loadTodos()">
+          <mat-icon>refresh</mat-icon>
+          Refresh
+        </button>
+      </div>
+
+      <!-- Chips de filtrage -->
+      <mat-chip-set aria-label="Filter selection" class="filter-chips">
+        <mat-chip-option
+          [selected]="currentFilter === 'all'"
+          (click)="setFilter('all')">
+          All ({{ todos.length }})
+        </mat-chip-option>
+        <mat-chip-option
+          [selected]="currentFilter === 'active'"
+          (click)="setFilter('active')"
+          color="primary">
+          Active ({{ getActiveCount() }})
+        </mat-chip-option>
+        <mat-chip-option
+          [selected]="currentFilter === 'completed'"
+          (click)="setFilter('completed')"
+          color="accent">
+          Completed ({{ getCompletedCount() }})
+        </mat-chip-option>
+      </mat-chip-set>
+    </mat-card-content>
+  </mat-card>
 
   <!-- Loading State -->
   @if (loading) {
-    <div class="loading">
-      Loading todos...
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading todos...</p>
     </div>
   }
-
-  <!-- Error State -->
-  @if (error) {
-    <div class="error">
-      {{ error }}
-    </div>
-  }
-
-  <!-- Filter Buttons -->
-  <div class="filters">
-    <button
-      [class.active]="currentFilter === 'all'"
-      (click)="setFilter('all')">
-      All ({{ todos.length }})
-    </button>
-    <button
-      [class.active]="currentFilter === 'active'"
-      (click)="setFilter('active')">
-      Active ({{ getActiveCount() }})
-    </button>
-    <button
-      [class.active]="currentFilter === 'completed'"
-      (click)="setFilter('completed')">
-      Completed ({{ getCompletedCount() }})
-    </button>
-  </div>
 
   <!-- Todo List -->
   @if (!loading) {
-    <div class="todos">
+    <div class="todos-grid">
       @for (todo of filteredTodos; track trackByTodoId($index, todo)) {
-        <div
-          class="todo-item"
-          [class.completed]="todo.completed">
+        <mat-card class="todo-card" [class.completed]="todo.completed">
+          <mat-card-content>
+            <div class="todo-content">
+              <mat-checkbox
+                [checked]="todo.completed"
+                (change)="toggleComplete(todo)"
+                color="primary">
+              </mat-checkbox>
 
-          <div class="todo-content">
-            <input
-              type="checkbox"
-              [checked]="todo.completed"
-              (change)="toggleComplete(todo)"
-              class="checkbox">
-
-            <div class="todo-details">
-              <h3 [class.completed-text]="todo.completed">{{ todo.title }}</h3>
-              @if (todo.description) {
-                <p>{{ todo.description }}</p>
-              }
-              @if (todo.createdAt) {
-                <small class="timestamp">
-                  Created: {{ todo.createdAt | date:'short' }}
-                </small>
-              }
+              <div class="todo-details">
+                <h3 [class.completed-text]="todo.completed">
+                  {{ todo.title }}
+                </h3>
+                @if (todo.description) {
+                  <p class="description">{{ todo.description }}</p>
+                }
+                @if (todo.createdAt) {
+                  <p class="timestamp">
+                    <mat-icon inline>schedule</mat-icon>
+                    {{ todo.createdAt | date:'short' }}
+                  </p>
+                }
+              </div>
             </div>
-          </div>
+          </mat-card-content>
 
-          <div class="todo-actions">
-            <button class="btn-delete" (click)="deleteTodo(todo.id)">
-              Delete
+          <mat-card-actions align="end">
+            <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)" matTooltip="Delete todo">
+              <mat-icon>delete</mat-icon>
             </button>
-          </div>
-        </div>
+          </mat-card-actions>
+        </mat-card>
       } @empty {
-        <div class="empty-state">
-          <p>No todos found.</p>
-          @if (currentFilter !== 'all') {
-            <p>Try changing the filter.</p>
-          }
-        </div>
+        <mat-card class="empty-state-card">
+          <mat-card-content>
+            <mat-icon class="empty-icon">check_circle_outline</mat-icon>
+            <h3>No todos found</h3>
+            @if (currentFilter !== 'all') {
+              <p>Try changing the filter or add a new todo.</p>
+            } @else {
+              <p>Add your first todo to get started!</p>
+            }
+          </mat-card-content>
+        </mat-card>
       }
     </div>
   }

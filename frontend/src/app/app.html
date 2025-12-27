@@ -1,8 +1,13 @@
 <div class="app-container">
-  <header class="app-header">
-    <h1>{{ title }}</h1>
-  </header>
+  <!-- Material Toolbar Header -->
+  <mat-toolbar color="primary" class="app-toolbar">
+    <mat-icon class="app-icon">assignment_turned_in</mat-icon>
+    <span class="app-title">{{ title }}</span>
+    <span class="spacer"></span>
+    <span class="app-subtitle">{{ subtitle }}</span>
+  </mat-toolbar>
 
+  <!-- Main Content -->
   <main class="app-main">
     <app-todo-form (todoCreated)="onTodoCreated()"></app-todo-form>
     <app-todo-list></app-todo-list>
