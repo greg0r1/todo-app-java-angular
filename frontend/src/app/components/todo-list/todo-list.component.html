@@ -1,0 +1,84 @@
+<div class="todo-list-container">
+  <header class="header">
+    <h1>Todo List</h1>
+    <button class="btn-add" (click)="loadTodos()">Refresh</button>
+  </header>
+
+  <!-- Loading State -->
+  @if (loading) {
+    <div class="loading">
+      Loading todos...
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error) {
+    <div class="error">
+      {{ error }}
+    </div>
+  }
+
+  <!-- Filter Buttons -->
+  <div class="filters">
+    <button
+      [class.active]="currentFilter === 'all'"
+      (click)="setFilter('all')">
+      All ({{ todos.length }})
+    </button>
+    <button
+      [class.active]="currentFilter === 'active'"
+      (click)="setFilter('active')">
+      Active ({{ getActiveCount() }})
+    </button>
+    <button
+      [class.active]="currentFilter === 'completed'"
+      (click)="setFilter('completed')">
+      Completed ({{ getCompletedCount() }})
+    </button>
+  </div>
+
+  <!-- Todo List -->
+  @if (!loading) {
+    <div class="todos">
+      @for (todo of filteredTodos; track trackByTodoId($index, todo)) {
+        <div
+          class="todo-item"
+          [class.completed]="todo.completed">
+
+          <div class="todo-content">
+            <input
+              type="checkbox"
+              [checked]="todo.completed"
+              (change)="toggleComplete(todo)"
+              class="checkbox">
+
+            <div class="todo-details">
+              <h3 [class.completed-text]="todo.completed">{{ todo.title }}</h3>
+              @if (todo.description) {
+                <p>{{ todo.description }}</p>
+              }
+              @if (todo.createdAt) {
+                <small class="timestamp">
+                  Created: {{ todo.createdAt | date:'short' }}
+                </small>
+              }
+            </div>
+          </div>
+
+          <div class="todo-actions">
+            <button class="btn-delete" (click)="deleteTodo(todo.id)">
+              Delete
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p>No todos found.</p>
+          @if (currentFilter !== 'all') {
+            <p>Try changing the filter.</p>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
